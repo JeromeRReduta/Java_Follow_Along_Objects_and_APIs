@@ -45,8 +45,8 @@ public class TestResults {
         student's higher grade between the two tests
      */
     public static void main(String[] args) {
-        Map originalGrades = getOriginalGrades();
-        Map makeUpGrades = getMakeUpGrades();
+        Map<String, Integer> originalGrades = (Map<String, Integer>)getOriginalGrades();
+        Map<String, Integer> makeUpGrades = (Map<String, Integer>)getMakeUpGrades();
         Map highestGrades = getHighestGrades(originalGrades, makeUpGrades);
         System.out.println(highestGrades);
 
@@ -55,14 +55,16 @@ public class TestResults {
     /* Between 2 grade maps with the SAME PEOPLE, return a map where each
         person has the highest grade from either map
      */
-    public static Map getHighestGrades(Map gradeMap1, Map gradeMap2) {
+    public static Map<String, Integer> getHighestGrades(Map<String, Integer> gradeMap1,
+                                                        Map<String, Integer> gradeMap2) {
         Map highestGrades = new HashMap();
-        Set<Object> people = gradeMap1.keySet();
-        people.forEach( person -> {
-            int originalGrade = (Integer)gradeMap1.get(person);
-            int makeUpGrade = (Integer)gradeMap2.get(person);
-            highestGrades.put(person, Math.max(originalGrade, makeUpGrade));
-        });
+        Set<String> people = gradeMap1.keySet();
+        for (Object person : people) {
+            int highestGrade = Math.max(
+                    gradeMap1.get(person),
+                    gradeMap2.get(person));
+            highestGrades.put(person, highestGrade);
+        }
         return highestGrades;
     }
 }
